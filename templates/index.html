@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}WattLab - Simulador Energético{% endblock %}
+
+{% block content %}
+  {% if errors %}
+    <div class="errors" role="alert">
+      <strong>Revisa los datos ingresados:</strong>
+      <ul>
+        {% for err in errors %}
+          <li>{{ err }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <div class="grid">
+    <section class="card">
+      <h2>Parámetros del escenario</h2>
+      <form action="/simulate" method="post">
+        <div class="field">
+          <label for="device_name">Equipo o escenario</label>
+          <input id="device_name" name="device_name" type="text" value="{{ form.device_name }}" required />
+        </div>
+        <div class="field">
+          <label for="watts">Potencia (Watts - W)</label>
+          <input id="watts" name="watts" type="number" step="any" value="{{ form.watts }}" required />
+        </div>
+        <div class="field">
+          <label for="hours_per_day">Horas de uso por día</label>
+          <input id="hours_per_day" name="hours_per_day" type="number" step="any" value="{{ form.hours_per_day }}" required />
+        </div>
+        <div class="field">
+          <label for="days_per_month">Días al mes (1 - 31)</label>
+          <input id="days_per_month" name="days_per_month" type="number" step="1" value="{{ form.days_per_month }}" required />
+        </div>
+        <div class="field">
+          <label for="tariff_cop_per_kwh">Tarifa por kWh (COP)</label>
+          <input id="tariff_cop_per_kwh" name="tariff_cop_per_kwh" type="number" step="any" value="{{ form.tariff_cop_per_kwh }}" required />
+        </div>
+        <div class="field">
+          <label for="reduction_percent">Reducción estimada en escenario óptimo (%)</label>
+          <input id="reduction_percent" name="reduction_percent" type="number" step="any" value="{{ form.reduction_percent }}" required />
+        </div>
+        <button type="submit">Calcular simulación</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Resultados de la simulación</h2>
+      {% if result %}
+        <p><strong>Escenario:</strong> {{ result.device_name }} · <strong>Nivel:</strong> {{ result.efficiency_rating }}</p>
+        <div class="metrics">
+          <div class="metric"><span>Consumo diario</span><strong>{{ result.daily_kwh }} kWh</strong></div>
+          <div class="metric"><span>Consumo mensual</span><strong>{{ result.monthly_kwh }} kWh</strong></div>
+          <div class="metric"><span>Costo mensual base</span><strong>${{ "{:,.2f}".format(result.monthly_cost_cop) }} COP</strong></div>
+          <div class="metric"><span>Emisión estimada</span><strong>{{ result.monthly_co2_kg }} kg CO2</strong></div>
+        </div>
+        <div class="savings">
+          <div><strong>Escenario optimizado:</strong> {{ result.optimized_monthly_kwh }} kWh/mes (${{ "{:,.2f}".format(result.optimized_monthly_cost_cop) }} COP)</div>
+          <div><strong>Ahorro mensual estimado:</strong> ${{ "{:,.2f}".format(result.monthly_savings_cop) }} COP</div>
+          <div><strong>Ahorro anual proyectado:</strong> ${{ "{:,.2f}".format(result.annual_savings_cop) }} COP</div>
+        </div>
+      {% else %}
+        <p style="color: var(--muted);">
+          Completa el formulario y haz clic en <strong>Calcular simulación</strong> para ver el consumo mensual, el costo y el ahorro potencial.
+        </p>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

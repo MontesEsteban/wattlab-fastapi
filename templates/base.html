@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}WattLab{% endblock %}</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --card-soft: #162032;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --danger-bg: #450a0a;
+      --danger-border: #ef4444;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    header {
+      margin-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+    header h1 {
+      margin: 0 0 0.25rem;
+      font-size: 1.75rem;
+      color: var(--accent);
+    }
+    header p {
+      margin: 0;
+      color: var(--muted);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+      align-items: start;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .field { margin-bottom: 0.9rem; }
+    label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+      color: #e2e8f0;
+    }
+    input {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card-soft);
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+    input:focus {
+      outline: 2px solid var(--accent);
+      border-color: var(--accent);
+    }
+    button {
+      width: 100%;
+      margin-top: 0.4rem;
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #06202a;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover { filter: brightness(1.08); }
+    .errors {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 1rem;
+    }
+    .errors ul { margin: 0.25rem 0 0; padding-left: 1.2rem; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-top: 0.85rem;
+    }
+    .metric {
+      background: var(--card-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.8rem;
+    }
+    .metric span { display: block; font-size: 0.78rem; color: var(--muted); }
+    .metric strong { font-size: 1.15rem; color: var(--text); }
+    .savings {
+      margin-top: 1rem;
+      padding: 0.9rem;
+      border-radius: 10px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.45);
+    }
+    .savings strong { color: #4ade80; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>WattLab</h1>
+      <p>Simulador de consumo eléctrico, costo mensual y escenario de optimización</p>
+    </header>
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
